@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from typing import Union, Optional
 
 
-class APIFactory(BaseModel):
+class AIPModel(BaseModel):
     desc: str
     url: str
     method: str
