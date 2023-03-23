@@ -1,0 +1,46 @@
+[
+  {
+    "desc": "彩云小译",
+    "url": "https://biz.caiyunapp.com/v1/send_sms_code",
+    "method": "POST",
+    "headers": {
+      "Referer": "https://fanyi.caiyunapp.com/",
+      "Cy-Token": "token 9876032166"
+    },
+    "json": {
+      "phone_num": "{phone}",
+      "area_code": "86"
+    },
+    "identifier": "ok"
+  },
+  {
+    "desc": "卡饭信息安全",
+    "url": "https://pdf.kfsafe.cn/sms/phone/code",
+    "method": "POST",
+    "json": {
+      "phone": "{phone}"
+    },
+    "identifier": "ok"
+  },
+  {
+    "desc": "网易云游戏",
+    "url": "https://n.cg.163.com/api/v1/phone-captchas/86-{phone}",
+    "method": "POST",
+    "json": {
+      "etc": {
+        "validate": ""
+      }
+    },
+    "identifier": ""
+  },
+  {
+    "desc": "迪卡侬",
+    "url": "https://www.decathlon.com.cn/zh/ajax/rest/model/atg/userprofiling/ProfileActor/send-mobile-verification-code",
+    "method": "POST",
+    "json": {
+      "countryCode": "CN",
+      "mobile": "{phone}"
+    },
+    "identifier": "200"
+  }
+]
