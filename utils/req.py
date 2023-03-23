@@ -13,11 +13,15 @@ def tk(beans: [APIBean], phone: str, count: int, proxy: Optional[str] = None):
     async def _():
         task = []
         for idx in range(0, count):
-            r = idx // len(beans)
-            if r:
-                task.append(send(beans[idx - r * len(beans)], phone, proxy))
+            if len(beans):
+                r = idx // len(beans)
+                if r:
+                    task.append(send(beans[idx - r * len(beans)], phone, proxy))
+                else:
+                    task.append(send(beans[idx], phone, proxy))
             else:
-                task.append(send(beans[idx], phone, proxy))
+                logger.error("Check apidata.json.")
+                exit(-1)
         await asyncio.gather(*task)
 
     if 'nt' == os.name:
@@ -52,10 +56,8 @@ async def do(proxy: Optional[str] = None, **kwargs):
                     return rt
         except ConnectionRefusedError:
             logger.info('Connection Refused.')
-            exit(-1)
         except ClientProxyConnectionError:
             logger.info('Proxy Refused.')
-            exit(-1)
 
 
 def wrapper(bean: APIBean, phone):
