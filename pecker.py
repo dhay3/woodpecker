@@ -49,35 +49,28 @@ def load_api(path: str = r'apidata.json'):
             ct = json.loads(ct.read())
             _api_list = [APIBean(**api) for api in ct]
             return _api_list
-    except FileNotFoundError as e:
+    except FileNotFoundError:
         logger.warning('apidata.json not found. Fetching data from github.')
         return [APIBean(**api) for api in
                 requests.get(
                     url='https://raw.githubusercontent.com/dhay3/woodpecker/master/woodpecker/apidata.json',
                     timeout=10).json()]
-    except JSONDecodeError as e:
+    except JSONDecodeError:
         logger.warning('apidata.json read error.')
-
-
-if __name__ == '__main__':
-    load_api()
 
 
 @click.command()
 @click.argument('phone', metavar='<phone number>', type=str)
 @click.option('-c', '--count', metavar='[count]', type=int, default=10,
               help='Count of sms to send. Failed\'s will be counted.')
-@click.option('-i', '--interval', metavar='[interval]', type=int, default=0,
-              help='Delay time of sending sms.')
 @click.option('-x', '--proxy', metavar='<socket>', type=str,
               help='Use proxy.')
-@click.option('-f', '--flooding', is_flag=True, type=bool,
-              help='Flooding api mode. Skipping check request status.')
-def pecker(phone: str, count: int, interval: int, proxy: str, flooding: bool = False):
+def pecker(phone: str, count: int, proxy: str = None):
     banner()
     _api = load_api()
     logger.success(f'apidata.json has been loaded, {len(_api)} api has been found.')
-    tk(_api, phone, count)
+    tk(_api, phone, count, proxy)
 
-# if __name__ == '__main__':
-#     pecker()
+
+if __name__ == '__main__':
+    pecker()

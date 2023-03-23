@@ -20,7 +20,7 @@ def tk(beans: [APIBean], phone: str, count: int, proxy: Optional[str] = None):
                 else:
                     task.append(send(beans[idx], phone, proxy))
             else:
-                logger.error("Check apidata.json.")
+                logger.error("apidata.json has no data.")
                 exit(-1)
         await asyncio.gather(*task)
 
